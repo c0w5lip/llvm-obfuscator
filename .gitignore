@@ -1,0 +1,11 @@
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+
+/samples/
+
+*.out
+*.ll
+*.so
