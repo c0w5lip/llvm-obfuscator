@@ -23,10 +23,13 @@ PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisMana
                     LLVMContext &context = BO->getContext();
                     Type *type = Type::getInt32Ty(context);
 
+
                     if (BO->getOpcode() == Instruction::Add && BO->getType()->isIntegerTy(32)) {
                         Value *a = BO->getOperand(0);
                         Value *b = BO->getOperand(1);
 
+
+                        // A + B = (A ^ B) - 2*(~A & B)
                         Value *xor_ab = builder.CreateXor(a, b);
                         Value *not_a = builder.CreateNot(a);
                         Value *and_not_a_b = builder.CreateAnd(not_a, b);
@@ -37,6 +40,24 @@ PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisMana
                         BO->eraseFromParent();
 
                         errs() << "[+] Obfuscated add in function: " << F.getName() << "\n";
+                        continue;
+                    }
+
+                    if (BO->getOpcode() == Instruction::Sub && BO->getType()->isIntegerTy(32)) {
+                        Value *a = BO->getOperand(0);
+                        Value *b = BO->getOperand(1);
+
+                        // A - B = (A ^ -B) + 2*(A & -B)
+                        Value *minus_b = builder.CreateSub(ConstantInt::get(type, 0), b);
+                        Value *a_xor_minus_b = builder.CreateXor(a, minus_b);
+                        Value *a_and_minus_b = builder.CreateAnd(a, minus_b);
+                        Value *shl = builder.CreateShl(a_and_minus_b, ConstantInt::get(type, 1));
+                        Value *result = builder.CreateAdd(a_xor_minus_b, shl);
+
+                        BO->replaceAllUsesWith(result);
+                        BO->eraseFromParent();
+                        
+                        errs() << "[+] Obfuscated sub in function: " << F.getName() << "\n";
                         continue;
                     }
 

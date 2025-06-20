@@ -15,7 +15,7 @@ The passes can be used independently or in combination to achieve various levels
 - ~~Control Flow Flattening~~
 - Instruction Substitution
     - add
-    - ~~sub~~
+    - sub
     - mul
     - ~~div~~
 - ~~Opaque Predicates~~
