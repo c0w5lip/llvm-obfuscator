@@ -10,16 +10,12 @@ The passes can be used independently or in combination to achieve various levels
 
 ## Passes
 
-- ~~Basic Block Splitting~~
-- ~~Bogus Control Flow~~
 - ~~Control Flow Flattening~~
 - Instruction Substitution
     - add
     - sub
     - mul
     - ~~div~~
-- ~~Opaque Predicates~~
-
 
 ## Setup
 
