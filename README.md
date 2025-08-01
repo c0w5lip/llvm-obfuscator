@@ -2,7 +2,7 @@
 
 This project provides basic samples implementing various obfuscation techniques in order to make reverse engineering and static analysis more difficult.
 
-The passes can be used independently or in combination, as well as multiple times in a row on the same target to achieve various levels of obfuscation. Have fun tweaking :]
+The passes can be used independently or in combination, in different order, as well as multiple times in a row on the same target to achieve various levels of obfuscation. Have fun tweaking :]
 
 *This project is built under **LLVM 17** and follows the [New Pass Manager](https://llvm.org/docs/NewPassManager.html) infrastructure.*
 
