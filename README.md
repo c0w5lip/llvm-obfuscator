@@ -34,11 +34,11 @@ make -C build
 ### Usage example
 
 ```bash
-clang-17 -S -emit-llvm -O0 samples/cff/cff.c -o samples/cff/cff.ll
+clang-17 -S -emit-llvm -O0 samples/cff.c -o samples/cff.ll
 
-opt-17 -load-pass-plugin=build/src/LLVMObfuscator.so -passes="cff" samples/cff/cff.ll -S -o samples/cff/cff_o.ll
+opt-17 -load-pass-plugin=build/src/LLVMObfuscator.so -passes="cff" samples/cff.ll -S -o samples/cff_o.ll
 
-clang-17 samples/cff/cff_o.ll -o samples/cff/cff_o.out
+clang-17 samples/cff_o.ll -o samples/cff_o.out
 ```
 
 ---
