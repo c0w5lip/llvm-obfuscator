@@ -6,16 +6,22 @@
 
 using namespace llvm;
 
+
+
+
 PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisManager &) {
     errs() << "[+] Pass registered: InstructionSubstitutionPass\n";
     
     for (Function &F : M) {
-        if (F.isDeclaration()) { // skip external functions
+        if (F.isDeclaration() || F.empty()) { // skip external and empty functions
             continue;
         } 
 
         for (BasicBlock &BB : F) {
+
+
             for (auto i = BB.begin(); i != BB.end();) {
+                
                 Instruction &I = *i++;
 
                 if (auto BO = dyn_cast<BinaryOperator>(&I)) {
