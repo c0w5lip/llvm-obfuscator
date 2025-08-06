@@ -36,9 +36,10 @@ make -C build
 ```bash
 clang-17 -S -emit-llvm -O0 samples/cff.c -o samples/cff.ll
 
-opt-17 -load-pass-plugin=build/src/LLVMObfuscator.so -passes="cff" samples/cff.ll -S -o samples/cff_o.ll
+# NOTE: this overwrites the original .ll
+opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="cff" samples/cff.ll -S -o samples/cff.ll
 
-clang-17 samples/cff_o.ll -o samples/cff_o.out
+clang-17 samples/cff.ll -o samples/cff
 ```
 
 ---

@@ -10,4 +10,9 @@ add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 
-add_subdirectory(src)
+add_llvm_pass_plugin(LLVMObfuscator
+    src/passes/ControlFlowFlatteningPass.cpp
+    src/passes/InstructionSubstitutionPass.cpp
+
+    src/RegisterPasses.cpp
+)
