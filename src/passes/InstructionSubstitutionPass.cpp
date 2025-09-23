@@ -7,8 +7,6 @@
 using namespace llvm;
 
 
-
-
 PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisManager &) {
     errs() << "[+] Pass registered: InstructionSubstitutionPass\n";
     
@@ -18,7 +16,6 @@ PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisMana
         } 
 
         for (BasicBlock &BB : F) {
-
 
             for (auto i = BB.begin(); i != BB.end();) {
                 
@@ -88,16 +85,10 @@ PreservedAnalyses InstructionSubstitutionPass::run(Module &M, ModuleAnalysisMana
                         errs() << "[+] Obfuscated mul in function: " << F.getName() << "\n";
                         continue;
                     }
-
-
-
                 }
-
-
             }
         }
     }
-    
 
     return PreservedAnalyses::none();
 }

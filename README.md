@@ -4,19 +4,24 @@ This project provides basic samples implementing various obfuscation techniques 
 
 The passes can be used independently or in combination, in different order, as well as multiple times in a row on the same target to achieve various levels of obfuscation. Have fun tweaking :]
 
+
+
 *This project is built under **LLVM 17** and follows the [New Pass Manager](https://llvm.org/docs/NewPassManager.html) infrastructure.*
 
 ---
 
 ## Passes
 
+- ~~Basic Block Splitting ("bbs")~~
 - ~~Control Flow Flattening~~ ("cff")
-    - seed-based?
+    - seed-based (?)
 - Instruction Substitution ("is")
     - add
     - sub
     - mul
-    - ~~div~~
+- ~~Opaque Predicates ("op")~~
+- ~~String Encryption ("se")~~
+    - XOR-based
 
 ## Setup
 
@@ -34,6 +39,7 @@ make -C build
 ### Usage example
 
 ```bash
+# be mindful of optimization levels
 clang-17 -S -emit-llvm -O0 samples/cff.c -o samples/cff.ll
 
 # NOTE: this overwrites the original .ll

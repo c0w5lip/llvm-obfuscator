@@ -10,7 +10,7 @@ PreservedAnalyses ControlFlowFlatteningPass::run(Module &M, ModuleAnalysisManage
             continue;
         }
 
-        flatten(F);
+        // flatten(F);
     }
 
     return PreservedAnalyses::none();
