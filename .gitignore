@@ -3,7 +3,6 @@
 /build/
 
 /samples/
+/out/
 
-*.out
-*.ll
-*.so
+run.sh

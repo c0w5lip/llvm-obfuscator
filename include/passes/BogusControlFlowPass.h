@@ -5,7 +5,7 @@
 namespace llvm {
     class ModulePass;
 
-    struct OpaquePredicatesPass : PassInfoMixin<OpaquePredicatesPass> {
+    struct BogusControlFlowPass : PassInfoMixin<BogusControlFlowPass> {
         PreservedAnalyses run(Module &M, ModuleAnalysisManager &);
 
         static bool isRequired() {

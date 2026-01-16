@@ -12,16 +12,17 @@ The passes can be used independently or in combination, in different order, as w
 
 ## Passes
 
-- ~~Basic Block Splitting ("bbs")~~
-- ~~Control Flow Flattening~~ ("cff")
+- Bogus Control Flow ("bcf")
+    - Uses [Collatz conjecture](https://en.wikipedia.org/wiki/Collatz_conjecture) as Opaque predicate | Cao Y, Zhou Z, Zhuang Y. Advancing Code Obfuscation: Novel Opaque Predicate Techniques to Counter Dynamic Symbolic Execution. Computers, Materials & Continua, 2025, 84(1): 1545-1565. https://doi.org/10.32604/cmc.2025.062743
+- ~~Control Flow Flattening~~ ("cff") -> under development ⚒️
     - seed-based (?)
 - Instruction Substitution ("is")
-    - add
-    - sub
-    - mul
-- ~~Opaque Predicates ("op")~~
-- ~~String Encryption ("se")~~
-    - XOR-based
+    - add instructions | Uses Mixed Boolean-Arithmetic
+
+## TODO
+
+- Allow user to choose depth (number of cycles)
+- Implement some of the transformations used in [Trigress](https://tigress.wtf/) (?)
 
 ## Setup
 
@@ -40,12 +41,13 @@ make -C build
 
 ```bash
 # be mindful of optimization levels
-clang-17 -S -emit-llvm -O0 samples/cff.c -o samples/cff.ll
+clang-17 -S -emit-llvm -O0 samples/cff.c -o out/out.ll
 
 # NOTE: this overwrites the original .ll
-opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="cff" samples/cff.ll -S -o samples/cff.ll
+# use -passes="bcf,cff,is" to use other passes (order matters)
+opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="bcf" out/out.ll -S -o out/out_obfuscated.ll
 
-clang-17 samples/cff.ll -o samples/cff
+clang-17 out/out_obfuscated.ll -o out/out
 ```
 
 ---

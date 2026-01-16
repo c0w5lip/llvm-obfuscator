@@ -11,11 +11,9 @@ include_directories(${LLVM_INCLUDE_DIRS})
 link_directories(${LLVM_LIBRARY_DIRS})
 
 add_llvm_pass_plugin(LLVMObfuscator
-    src/passes/BasicBlockSplittingPass.cpp
+    src/passes/BogusControlFlowPass.cpp
     src/passes/ControlFlowFlatteningPass.cpp
     src/passes/InstructionSubstitutionPass.cpp
-    src/passes/OpaquePredicatesPass.cpp
-    src/passes/StringEncryptionPass.cpp
 
     src/RegisterPasses.cpp
 )
