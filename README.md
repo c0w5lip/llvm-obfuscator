@@ -23,6 +23,7 @@ The passes can be used independently or in combination, in different order, as w
 
 - Allow user to choose depth (number of cycles)
 - Implement some of the transformations used in [Trigress](https://tigress.wtf/) (?)
+- Add CFG screenshots within this README
 
 ## Setup
 
@@ -43,7 +44,6 @@ make -C build
 # be mindful of optimization levels
 clang-17 -S -emit-llvm -O0 samples/cff.c -o out/out.ll
 
-# NOTE: this overwrites the original .ll
 # use -passes="bcf,cff,is" to use other passes (order matters)
 opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="bcf" out/out.ll -S -o out/out_obfuscated.ll
 
