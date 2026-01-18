@@ -14,10 +14,9 @@ The passes can be used independently or in combination, in different order, as w
 
 - Bogus Control Flow ("bcf")
     - Uses [Collatz conjecture](https://en.wikipedia.org/wiki/Collatz_conjecture) as Opaque predicate | Cao Y, Zhou Z, Zhuang Y. Advancing Code Obfuscation: Novel Opaque Predicate Techniques to Counter Dynamic Symbolic Execution. Computers, Materials & Continua, 2025, 84(1): 1545-1565. https://doi.org/10.32604/cmc.2025.062743
-- ~~Control Flow Flattening~~ ("cff") -> under development ⚒️
-    - seed-based (?)
+- Control Flow Flattening ("cff")
 - Instruction Substitution ("is")
-    - add instructions | Uses Mixed Boolean-Arithmetic
+    - `add` instructions | Uses Mixed Boolean-Arithmetic
 
 ## TODO
 
