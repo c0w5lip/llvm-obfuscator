@@ -1,9 +1,11 @@
 #include "../../include/passes/ControlFlowFlatteningPass.h"
+
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/BasicBlock.h"
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/Transforms/Utils/Local.h" // For DemotePHIToStack
-#include "llvm/Transforms/Utils/BasicBlockUtils.h" // For SplitBlock
+#include "llvm/Transforms/Utils/BasicBlockUtils.h"
+
 #include <vector>
 #include <map>
 
