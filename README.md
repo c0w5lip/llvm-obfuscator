@@ -1,12 +1,46 @@
 # llvm-obfuscator
 
-This project provides basic samples implementing various obfuscation techniques in order to make reverse engineering and static analysis more difficult.
+This project provides basic implementation of various obfuscation techniques in order to make reverse engineering and static analysis more difficult.
 
 The passes can be used independently or in combination, in different order, as well as multiple times in a row on the same target to achieve various levels of obfuscation. Have fun tweaking :]
 
-
-
 *This project is built under **LLVM 17** and follows the [New Pass Manager](https://llvm.org/docs/NewPassManager.html) infrastructure.*
+
+## Control Flow Graph
+
+### Snippet
+
+```c
+int evaluate(int x) {
+    int result = 0;
+    if (x > 100) {
+        for (int i = 0; i < x; i += 10) {
+            result += i;
+        }
+    } else if (x > 0) {
+        for (int i = 0; i < x; i += 5) {
+            result += i * 2;
+            for (int j = 0; j < i; j += 2) {
+                result -= j;
+            }
+        }
+    } else {
+        for (int i = x; i < 0; i += 5) {
+            result += i * 3;
+            if (i % 2 == 0) {
+                result -= i / 2;    
+            }
+        }
+    }
+    return result;
+}
+```
+
+### Without obfuscation
+![Original code](README/without_cff.png)
+
+### With CFF obfuscation
+![CFF obfuscated code](README/with_cff.png)
 
 ---
 
@@ -18,36 +52,34 @@ The passes can be used independently or in combination, in different order, as w
 - Instruction Substitution ("is")
     - `add` instructions | Uses Mixed Boolean-Arithmetic
 
-## TODO
-
-- Allow user to choose depth (number of cycles)
-- Implement some of the transformations used in [Trigress](https://tigress.wtf/) (?)
-- Add CFG screenshots within this README
-
 ## Setup
 
 ### Build
 
 ```bash
-mkdir build
-cd build
-cmake ..
+$ mkdir build
+$ cd build
+$ cmake ..
 
-cd ..
-make -C build
+$ cd ..
+$ make -C build
 ```
 
 ### Usage example
 
 ```bash
-# be mindful of optimization levels
-clang-17 -S -emit-llvm -O0 samples/cff.c -o out/out.ll
+# be careful with optimization levels (e.g -O0)
+$ clang-17 -S -emit-llvm -O0 samples/cff.c -o out/out.ll
 
-# use -passes="bcf,cff,is" to use other passes (order matters)
-opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="bcf" out/out.ll -S -o out/out_obfuscated.ll
+# use -passes="bcf,cff,is" to use other passes (order matters) | NOTE: this overwrites the original .ll
+$ opt-17 -load-pass-plugin=build/LLVMObfuscator.so -passes="cff" out/out.ll -S -o out/out_obfuscated.ll
 
-clang-17 out/out_obfuscated.ll -o out/out
+$ clang-17 out/out_obfuscated.ll -o out/out
 ```
+
+## TODO
+
+- Implement some of the more obscure transformations used in [Tigress](https://tigress.wtf/)?
 
 ---
 
